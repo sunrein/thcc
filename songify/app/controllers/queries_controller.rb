@@ -1,5 +1,3 @@
-include HTTParty
-
 class QueriesController < ApplicationController
   def new
   end
@@ -15,16 +13,18 @@ class QueriesController < ApplicationController
     else
       query.search_count += 1
     end
+
+    search(params[:title])
   end
 
   def index
-    queries = Query.all
+    @queries = Query.all
 
     # render queries
   end
 
-  def search(params[:title])
-    response = HTTParty.get("https://api.spotify.com/v1/search?q=#{params[:title]}&type=track&limit=10")
+  def search(title)
+    response = HTTParty.get("https://api.spotify.com/v1/search?q=#{title}&type=track&limit=10")
 
     JSON.parse(response.body)
   end
@@ -33,9 +33,5 @@ class QueriesController < ApplicationController
 
   def query_params
     params.require(:song).permit(:title, :artist, :search_count)
-  end
-
-  def query
-    Query.find(params[:id])
   end
 end
