@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root 'queries#index'
+  resources :queries, only: [:index] do
+    collection do
+      post :find_or_create
+      get :search
+    end
+  end
 end
