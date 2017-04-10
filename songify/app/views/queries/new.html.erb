@@ -1,0 +1,10 @@
+<h1> search for a song </h1>
+<%= form_for @query do |f| %>
+	<div class="input-field">
+    <%= f.text_field :title, placeholder: "Enter a song title" %>
+	</div>
+
+	<div class="input-field">
+  	<%= f.submit 'search!' %>
+	</div>
+<% end %>

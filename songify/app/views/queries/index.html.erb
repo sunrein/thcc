@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Songify</title>
+  </head>
+
+  <body>
+    <h1> Welcome to Songify </h1>
+
+  <h1>Past Queries</h1>
+
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Times searched</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+  <% @queries.each do |query| %>
+    <tr>
+      <td><%= query.title %></td>
+      <td><%= query.search_count %></td>
+    </tr>
+  <% end %>
+  </table>
+  <%= link_to "new query", new_query_path, method: :get %>
+  </body>
+</html>
