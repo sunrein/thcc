@@ -1,26 +1,32 @@
 class QueriesController < ApplicationController
+  attr_reader :title
   def new
+    @query = Query.new
   end
 
-  def find_or_create
-    query = Query.find_by(params[:title])
+  def create
+    @query = Query.new(title: params[:title], search_count: 0)
 
-    if query.nil?
-      Query.create(
-                  title: params[:title],
-                  search_count: 0
-      )
+    if @query.save
     else
-      query.search_count += 1
+      render template: 'queries/new'
     end
-
-    search(params[:title])
   end
+    # query = Query.find_by(params[:title])
+    #
+    # if query.nil?
+    #   Query.create(
+    #               title: params[:title],
+    #               search_count: 0
+    #   )
+    # else
+    #   query.search_count += 1
+    # end
+
+    # search(params[:title])
 
   def index
     @queries = Query.all
-
-    # render queries
   end
 
   def search(title)
