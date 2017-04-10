@@ -1,16 +1,29 @@
+require "httparty"
+
 class QueriesController < ApplicationController
-  attr_reader :title
+
   def new
     @query = Query.new
   end
 
   def create
-    @query = Query.new(query_params)
+    @query = Query.find_by(title: query_params[:title])
 
-    if @query.save
-      redirect_to "queries"
+    if @query.nil?
+      @query = Query.create(query_params)
+
+      if @query.save
+        @query.search_count += 1
+        @query.save
+        redirect_to "/"
+      else
+        render template: 'queries/new'
+      end
     else
-      render template: 'queries/new'
+      search(query_params[:title])
+      @query.search_count += 1
+      @query.save
+      redirect_to "/"
     end
   end
     # query = Query.find_by(params[:title])
@@ -39,6 +52,6 @@ class QueriesController < ApplicationController
   private
 
   def query_params
-    params.require(:song).permit(:title, :artist, :search_count)
+    params.require(:query).permit(:title, :artist, :search_count)
   end
 end
