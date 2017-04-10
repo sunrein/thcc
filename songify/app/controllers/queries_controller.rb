@@ -5,9 +5,10 @@ class QueriesController < ApplicationController
   end
 
   def create
-    @query = Query.new(title: params[:title], search_count: 0)
+    @query = Query.new(query_params)
 
     if @query.save
+      redirect_to "queries"
     else
       render template: 'queries/new'
     end

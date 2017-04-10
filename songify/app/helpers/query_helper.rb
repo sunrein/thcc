@@ -1,8 +1,8 @@
 module QueryHelper
-  def existing_query(imdb)
-    movie = Movie.find_by(imdb_id: imdb)
-    if movie
-      movie.id
+  def existing_query(title)
+    query = Query.find_by(title: title)
+    if query
+      query.id
     else
       false
     end

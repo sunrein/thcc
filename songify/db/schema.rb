@@ -14,9 +14,9 @@ ActiveRecord::Schema.define(version: 20170409215829) do
 
   create_table "queries", force: :cascade do |t|
     t.string   "title"
-    t.integer  "search_count"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "search_count", default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
 end

@@ -1,0 +1,6 @@
+<input type="hidden" value="<%= title %>">
+<% if existing_query(title) %>
+  <h5><% title %> has been searched before</h5>
+<% else %>
+  <h5><%= link_to title, queries_path(title), method: :post %></h5>
+<% end %>
