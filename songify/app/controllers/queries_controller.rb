@@ -20,24 +20,12 @@ class QueriesController < ApplicationController
         render template: 'queries/new'
       end
     else
-      search(query_params[:title])
+      @result = search(query_params[:title])
       @query.search_count += 1
       @query.save
       redirect_to "/"
     end
   end
-    # query = Query.find_by(params[:title])
-    #
-    # if query.nil?
-    #   Query.create(
-    #               title: params[:title],
-    #               search_count: 0
-    #   )
-    # else
-    #   query.search_count += 1
-    # end
-
-    # search(params[:title])
 
   def index
     @queries = Query.all
@@ -46,7 +34,11 @@ class QueriesController < ApplicationController
   def search(title)
     response = HTTParty.get("https://api.spotify.com/v1/search?q=#{title}&type=track&limit=10")
 
-    JSON.parse(response.body)
+    parsed_response = JSON.parse(response.body)
+    @title = title
+    @artist = parsed_response["tracks"]["items"].first["artists"].first["name"]
+    @spotify = parsed_response["tracks"]["items"].first["external_urls"]
+    #todo: iterate over all items in tracks to parse the data for multiple results
   end
 
   private
