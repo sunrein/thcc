@@ -36,7 +36,7 @@ class QueriesController < ApplicationController
     response = HTTParty.get("https://api.spotify.com/v1/search?q=#{title}&type=track&limit=10")
 
     parsed_response = JSON.parse(response.body)
-    @title = title
+    @title = parsed_response["tracks"]["items"].first["name"]
     @artist = parsed_response["tracks"]["items"].first["artists"].first["name"]
     @spotify = parsed_response["tracks"]["items"].first["external_urls"]["spotify"]
     #todo: iterate over all items in tracks to parse the data for multiple results
