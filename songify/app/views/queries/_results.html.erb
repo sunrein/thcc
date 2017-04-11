@@ -1,4 +1,4 @@
-<p><%= @result %></p>
+<p>Top Result for <%= @title %></p>
 <table>
   <tr>
     <td>Title </td>
@@ -11,3 +11,6 @@
     <td> <a href= <%= @spotify %>> <%= @title %> </a></td>
   </tr>
 </table>
+
+<%= link_to "Search again", new_query_path, method: :get %>
+<%= link_to "See past queries", root_url, method: :get %>

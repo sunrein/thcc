@@ -7,6 +7,8 @@
   <body>
     <h1> Welcome to Songify </h1>
 
+  <%= link_to "Search for a song", new_query_path, method: :get %>
+
   <h1>Past Queries</h1>
 
   <table>
@@ -25,9 +27,7 @@
     </tr>
   <% end %>
   </table>
-  <%= link_to "new query", new_query_path, method: :get %>
 
-  <%=render partial: "results", locals: { title: @title, artist: @artist, spotify: @spotify } %>
-  
+
   </body>
 </html>

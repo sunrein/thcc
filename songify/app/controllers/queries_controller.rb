@@ -29,6 +29,7 @@ class QueriesController < ApplicationController
   end
 
   def index
+    @query = Query.new
     @queries = Query.all
   end
 
