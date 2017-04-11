@@ -13,17 +13,18 @@ class QueriesController < ApplicationController
       @query = Query.create(query_params)
 
       if @query.save
+        search(query_params[:title])
         @query.search_count += 1
         @query.save
-        redirect_to "/"
+        render partial: 'queries/results'
       else
         render template: 'queries/new'
       end
     else
-      @result = search(query_params[:title])
+      search(query_params[:title])
       @query.search_count += 1
       @query.save
-      redirect_to "/"
+      render partial: 'queries/results'
     end
   end
 
@@ -37,7 +38,7 @@ class QueriesController < ApplicationController
     parsed_response = JSON.parse(response.body)
     @title = title
     @artist = parsed_response["tracks"]["items"].first["artists"].first["name"]
-    @spotify = parsed_response["tracks"]["items"].first["external_urls"]
+    @spotify = parsed_response["tracks"]["items"].first["external_urls"]["spotify"]
     #todo: iterate over all items in tracks to parse the data for multiple results
   end
 
